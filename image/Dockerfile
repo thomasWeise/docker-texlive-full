@@ -37,7 +37,9 @@ RUN apt-get clean &&\
 # now the microsoft core fonts
     echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | debconf-set-selections &&\
     echo "ttf-mscorefonts-installer msttcorefonts/present-mscorefonts-eula note" | debconf-set-selections &&\
-    apt-get install -f -y --no-install-recommends ttf-mscorefonts-installer &&\
+    wget --output-document="/tmp/mscorefonts.deb" "http://ftp.de.debian.org/debian/pool/contrib/m/msttcorefonts/ttf-mscorefonts-installer_3.6_all.deb" &&\
+    apt install -f -y --no-install-recommends "/tmp/mscorefonts.deb" &&\
+    rm -f "/tmp/mscorefonts.deb" &&\
 # we make sure to contain the EULA in our container
     wget --output-document=/root/mscorefonts-eula "http://corefonts.sourceforge.net/eula.htm" &&\
 # install TeX Live and ghostscript
