@@ -22,7 +22,8 @@ RUN apt-get clean &&\
 # install utilities
     apt-get install -f -y apt-utils &&\
 # install some nice fonts, e.g., for chinese and other
-    apt-get install -f -y fontconfig \
+    apt-get install -f -y curl \
+                          fontconfig \
                           fonts-arphic-bkai00mp \
                           fonts-arphic-bsmi00lp \
                           fonts-arphic-gbsn00lp \
@@ -37,11 +38,11 @@ RUN apt-get clean &&\
 # now the microsoft core fonts
     echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | debconf-set-selections &&\
     echo "ttf-mscorefonts-installer msttcorefonts/present-mscorefonts-eula note" | debconf-set-selections &&\
-    wget --output-document="/tmp/mscorefonts.deb" "http://ftp.de.debian.org/debian/pool/contrib/m/msttcorefonts/ttf-mscorefonts-installer_3.6_all.deb" &&\
+    curl --output "/tmp/mscorefonts.deb" "http://ftp.de.debian.org/debian/pool/contrib/m/msttcorefonts/ttf-mscorefonts-installer_3.6_all.deb" &&\
     apt install -f -y --no-install-recommends "/tmp/mscorefonts.deb" &&\
     rm -f "/tmp/mscorefonts.deb" &&\
 # we make sure to contain the EULA in our container
-    wget --output-document=/root/mscorefonts-eula "http://corefonts.sourceforge.net/eula.htm" &&\
+    curl --output "/root/mscorefonts-eula" "http://corefonts.sourceforge.net/eula.htm" &&\
 # install TeX Live and ghostscript
     apt-get install -f -y ghostscript \
                           make \
