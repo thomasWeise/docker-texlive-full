@@ -33,7 +33,7 @@ RUN apt-get clean &&\
                           fonts-arphic-ukai \
                           fonts-arphic-uming \
                           fonts-dejavu \
-                          fonts-dejavu-core
+                          fonts-dejavu-core \
                           fonts-dejavu-extra \
                           fonts-droid-fallback \
                           fonts-guru \
