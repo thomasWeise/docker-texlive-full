@@ -45,8 +45,8 @@ RUN apt-get clean &&\
                           fonts-roboto-hinted \
                           fonts-stix \
                           fonts-symbola \
+                          fonts-texgyre \
                           fonts-unfonts-core \
-                          fonts-wqy-microhe \
                           ttf-wqy-microhei \
                           ttf-wqy-zenhei \
                           xfonts-intl-chinese \
