@@ -24,6 +24,7 @@ RUN apt-get clean &&\
     apt-get install -f -y apt-utils &&\
 # install some nice fonts, e.g., for chinese and other
     apt-get install -f -y curl \
+                          emacs-intl-fonts \
                           fontconfig \
                           fonts-arphic-bkai00mp \
                           fonts-arphic-bsmi00lp \
