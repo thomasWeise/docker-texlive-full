@@ -1,6 +1,5 @@
 # [thomasWeise/docker-texlive-full](https://hub.docker.com/r/thomasweise/docker-texlive-full/)
 
-[![Image Layers and Size](https://imagelayers.io/badge/thomasweise/docker-texlive-full:latest.svg)](https://imagelayers.io/?images=thomasweise%2Fdocker-texlive-full:latest)
 [![Docker Pulls](https://img.shields.io/docker/pulls/thomasweise/docker-texlive-full.svg)](https://hub.docker.com/r/thomasweise/docker-texlive-full/)
 [![Docker Stars](https://img.shields.io/docker/stars/thomasweise/docker-texlive-full.svg)](https://hub.docker.com/r/thomasweise/docker-texlive-full/)
 
@@ -12,7 +11,7 @@ The image has the following components:
 
 - [`TeX Live`](http://www.tug.org/texlive/)
 - [`ghostscript`](http://ghostscript.com/)
-- [`poppler-utils`](http://en.wikipedia.org/wiki/Poppler_(software))
+- [`poppler-utils`](http://poppler.freedesktop.org/)
 
 ## 2. License
 
@@ -22,7 +21,7 @@ This image is licensed under the GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2
 
 Currently, we provide the following utility scripts in folder `/bin/`:
 
-- `filterPdf.sh <document>` transform a document (either in [PostScript](https://en.wikipedia.org/wiki/PostScript)/`PS`, `EPS`, or `PDF` format) to `PDF` and include as many of the fonts used inside the document into the final `PDF`. This uses ghostscripts `gs` and checks the output with `pdftotext` from `poppler-utils` before replacing `<document>` with the hope to build a final pdf that can display on as many machines correctly as possible.
+- `filterPdf.sh <document>` transform a document (either in [PostScript](http://en.wikipedia.org/wiki/PostScript)/`PS`, `EPS`, or `PDF` format) to `PDF` and include as many of the fonts used inside the document into the final `PDF`. This uses ghostscripts `gs` and checks the output with `pdftotext` from `poppler-utils` before replacing `<document>` with the hope to build a final pdf that can display on as many machines correctly as possible.
 
 ## 4. Contact
 

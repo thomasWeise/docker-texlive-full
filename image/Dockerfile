@@ -1,8 +1,9 @@
 #
 # thomasweise/docker-texlive-full
 #
-# This is an image with a basic TeX Live installation.
-# Source: https://github.com/thomasWeise/docker-texlive/
+# This is an image with a full TeX Live installation and several
+# fonts and tools.
+# Source: http://github.com/thomasWeise/docker-texlive-full/
 # License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007
 # The license applies to the way the image is built, while the
 # software components inside the image are under the respective
@@ -70,6 +71,8 @@ RUN apt-get clean &&\
                         texlive-pictures-doc \
                         texlive-pstricks-doc \
                         texlive-science-doc &&\
+# update font cache
+    fc-cache -fv &&\
 # clean up all temporary files
     apt-get clean &&\
     apt-get autoclean -y &&\
