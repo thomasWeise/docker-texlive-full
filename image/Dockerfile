@@ -31,7 +31,8 @@ RUN apt-get clean &&\
                           fonts-arphic-gkai00mp \
                           fonts-arphic-ukai \
                           fonts-arphic-uming \
-                          fonts-dejavu-core \
+                          fonts-dejavu \
+                          fonts-liberation \
                           ttf-wqy-microhei \
                           ttf-wqy-zenhei \
                           xfonts-intl-chinese \
