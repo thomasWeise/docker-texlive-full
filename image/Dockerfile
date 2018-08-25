@@ -43,7 +43,7 @@ RUN apt-get clean &&\
     rm -f "/tmp/mscorefonts.deb" &&\
 # we make sure to contain the EULA in our container
     curl --output "/root/mscorefonts-eula" "http://corefonts.sourceforge.net/eula.htm" &&\
-# install TeX Live and ghostscript
+# install TeX Live and ghostscript as well as other tools
     apt-get install -f -y ghostscript \
                           make \
                           latex-cjk-common \
@@ -51,13 +51,13 @@ RUN apt-get clean &&\
                           texlive-full \
                           texlive-fonts-extra \
                           texlive-fonts-recommended \
-                          texlive-math-extra \
                           texlive-lang-all \
                           texlive-lang-cjk \
                           texlive-luatex \
                           texlive-pstricks \
                           texlive-science \
-                          texlive-xetex &&\
+                          texlive-xetex \
+                          poppler-utils &&\
 # free huge amount of unused space
     apt-get purge -f -y make-doc \
                         texlive-fonts-extra-doc \
@@ -78,3 +78,5 @@ RUN apt-get clean &&\
     rm -rf /tmp/* /var/tmp/* &&\
     rm -rf /var/lib/apt/lists/* &&\
     rm -f /etc/ssh/ssh_host_*
+
+ADD scripts /bin/
