@@ -32,11 +32,25 @@ RUN apt-get clean &&\
                           fonts-arphic-ukai \
                           fonts-arphic-uming \
                           fonts-dejavu \
+                          fonts-dejavu-core
+                          fonts-dejavu-extra \
+                          fonts-droid-fallback \
+                          fonts-guru \
+                          fonts-guru-extra \
                           fonts-liberation \
+                          fonts-noto-cjk \
+                          fonts-opensymbol \
+                          fonts-roboto \
+                          fonts-roboto-hinted \
+                          fonts-stix \
+                          fonts-symbola \
+                          fonts-unfonts-core \
+                          fonts-wqy-microhe \
                           ttf-wqy-microhei \
                           ttf-wqy-zenhei \
                           xfonts-intl-chinese \
-                          xfonts-intl-chinese-big &&\
+                          xfonts-intl-chinese-big \
+                          xfonts-wqy &&\
 # now the microsoft core fonts
     echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | debconf-set-selections &&\
     echo "ttf-mscorefonts-installer msttcorefonts/present-mscorefonts-eula note" | debconf-set-selections &&\
