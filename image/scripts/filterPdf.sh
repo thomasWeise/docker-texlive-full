@@ -40,6 +40,7 @@ gs -q -dEmbedAllFonts=true \
       -dColorImageFilter=/FlateEncode \
       -dGrayImageFilter=/FlateEncode \
       -dColorConversionStrategy=/LeaveColorUnchanged \
+      -dPrinted=false \
       -dNOPAUSE \
       -dQUIET \
       -dBATCH \
