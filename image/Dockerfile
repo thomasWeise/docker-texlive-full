@@ -74,6 +74,7 @@ RUN apt-get clean &&\
                           texlive-pstricks \
                           texlive-science \
                           texlive-xetex \
+                          texlive-bibtex-extra \
                           poppler-utils &&\
 # free huge amount of unused space
     apt-get purge -f -y make-doc \
