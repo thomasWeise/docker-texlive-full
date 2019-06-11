@@ -1,7 +1,6 @@
 #!/bin/bash -
 
-# This script filters a PDF file and attempts to include
-# as many fonts as possible.
+# This script filters a PDF file and attempts to include as many fonts as possible.
 
 # strict error handling
 set -o pipefail  # trace ERR through pipes
@@ -50,7 +49,7 @@ gs -q -dEmbedAllFonts=true \
       -sOutputFile="$tempDest" "$source" \
       -c ".setpdfwrite <</NeverEmbed [ ]>> setdistillerparams"
 
-echo "Successfully filtered '$source' to '$tempDest'."
+echo "Finished filtering '$source' to '$tempDest', now checking result."
 
 if pdftotext "$tempDest" &> /dev/null; then
   echo "File '$tempDest' has survived a pdftotext check, so we will move it to '$dest'."
