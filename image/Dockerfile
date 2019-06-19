@@ -75,7 +75,8 @@ RUN apt-get clean &&\
                           texlive-science \
                           texlive-xetex \
                           texlive-bibtex-extra \
-                          poppler-utils &&\
+                          poppler-utils \
+                          latexmk &&\
 # free huge amount of unused space
     apt-get purge -f -y make-doc \
                         texlive-fonts-extra-doc \
