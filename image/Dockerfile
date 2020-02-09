@@ -30,10 +30,10 @@ RUN apt-get clean &&\
     rm -rf /usr/share/lintian/* /usr/share/linda/* /var/cache/man/* &&\
     rm -rf /usr/share/man &&\
     mkdir -p /usr/share/man &&\
+    mv /user/share/doc/copyright /tmp  &&\
     rm -rf /usr/share/doc &&\
     mkdir -p /usr/share/doc &&\
-    rm -rf /usr/share/locale &&\
-    mkdir -p /usr/share/locale &&\
+    mv /tmp/copyright /user/share/doc &&\
     mkdir -p /usr/share/info &&\
 # install utilities
     apt-get install -f -y apt-utils &&\
@@ -99,17 +99,17 @@ RUN apt-get clean &&\
     apt-get autoclean -y &&\
     apt-get autoremove -y &&\
     apt-get clean &&\
-    rm -rf /tmp/* /var/tmp/* &&\
     rm -rf /var/lib/apt/lists/* &&\
     rm -f /etc/ssh/ssh_host_* &&\
 # delete man pages and documentation
     rm -rf /usr/share/man &&\
     mkdir -p /usr/share/man &&\
+    mv /user/share/doc/copyright /tmp  &&\
     rm -rf /usr/share/doc &&\
     mkdir -p /usr/share/doc &&\
+    mv /tmp/copyright /user/share/doc &&\
     rm -rf /var/cache/apt/archives &&\
     mkdir -p /var/cache/apt/archives &&\
-    rm -rf /usr/share/locale &&\
-    mkdir -p /usr/share/locale
+    rm -rf /tmp/* /var/tmp/*
 
 ADD scripts /bin/
