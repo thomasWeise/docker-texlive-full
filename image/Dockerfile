@@ -9,7 +9,7 @@
 # software components inside the image are under the respective
 # licenses chosen by their respective copyright holders.
 #
-FROM ubuntu:19.10
+FROM ubuntu:20.04
 MAINTAINER Thomas Weise <tweise@hfuu.edu.cn>
 
 ENV LANG=C.UTF-8
@@ -20,6 +20,21 @@ RUN apt-get clean &&\
     apt-get autoclean -y &&\
     apt-get autoremove -y &&\
     apt-get update &&\
+# prevent doc and man pages from being installed
+# the idea is based on https://askubuntu.com/questions/129566
+    printf 'path-exclude /usr/share/doc/*\npath-include /usr/share/doc/*/copyright\npath-exclude /usr/share/man/*\npath-exclude /usr/share/groff/*\npath-exclude /usr/share/info/*\npath-exclude /usr/share/lintian/*\npath-exclude /usr/share/linda/*' > /etc/dpkg/dpkg.cfg.d/01_nodoc &&\
+# remove doc files and man pages already installed
+    find /usr/share/doc -depth -type f ! -name copyright|xargs rm || true &&\
+    find /usr/share/doc -empty|xargs rmdir || true &&\
+    rm -rf /usr/share/groff/* /usr/share/info/* &&\
+    rm -rf /usr/share/lintian/* /usr/share/linda/* /var/cache/man/* &&\
+    rm -rf /usr/share/man/* &&\
+    find /usr/share/doc | egrep "\.gz" | xargs rm &&\
+    find /usr/share/doc | egrep "\.pdf$" | xargs rm &&\
+    find /usr/share/doc | egrep "\.tex$" | xargs rm &&\
+    mkdir -p /usr/share/info &&\
+    mkdir -p /usr/share/doc &&\
+    mkdir -p /usr/share/man &&\
 # install utilities
     apt-get install -f -y apt-utils &&\
 # install some nice fonts, e.g., for chinese and other
@@ -77,18 +92,6 @@ RUN apt-get clean &&\
                           texlive-bibtex-extra \
                           poppler-utils \
                           latexmk &&\
-# free huge amount of unused space
-    apt-get purge -f -y make-doc \
-                        texlive-fonts-extra-doc \
-                        texlive-fonts-recommended-doc \
-                        texlive-humanities-doc \
-                        texlive-latex-base-doc \
-                        texlive-latex-extra-doc \
-                        texlive-latex-recommended-doc \
-                        texlive-metapost-doc \
-                        texlive-pictures-doc \
-                        texlive-pstricks-doc \
-                        texlive-science-doc &&\
 # update font cache
     fc-cache -fv &&\
 # clean up all temporary files
