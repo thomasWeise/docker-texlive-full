@@ -22,14 +22,19 @@ RUN apt-get clean &&\
     apt-get update &&\
 # prevent doc and man pages from being installed
 # the idea is based on https://askubuntu.com/questions/129566
+# and https://askubuntu.com/questions/628407
     printf 'path-exclude /usr/share/doc/*\npath-include /usr/share/doc/*/copyright\npath-exclude /usr/share/man/*\npath-exclude /usr/share/groff/*\npath-exclude /usr/share/info/*\npath-exclude /usr/share/lintian/*\npath-exclude /usr/share/linda/*' > /etc/dpkg/dpkg.cfg.d/01_nodoc &&\
+    printf 'Dir::Cache "";\nDir::Cache::archives "";' > /etc/apt/apt.conf.d/02nocache &&\
 # remove doc files and man pages already installed
     rm -rf /usr/share/groff/* /usr/share/info/* &&\
     rm -rf /usr/share/lintian/* /usr/share/linda/* /var/cache/man/* &&\
-    rm -rf /usr/share/man/* &&\
-    mkdir -p /usr/share/info &&\
-    mkdir -p /usr/share/doc &&\
+    rm -rf /usr/share/man &&\
     mkdir -p /usr/share/man &&\
+    rm -rf /usr/share/doc &&\
+    mkdir -p /usr/share/doc &&\
+    rm -rf /usr/share/locale &&\
+    mkdir -p /usr/share/locale &&\
+    mkdir -p /usr/share/info &&\
 # install utilities
     apt-get install -f -y apt-utils &&\
 # install some nice fonts, e.g., for chinese and other
@@ -96,6 +101,15 @@ RUN apt-get clean &&\
     apt-get clean &&\
     rm -rf /tmp/* /var/tmp/* &&\
     rm -rf /var/lib/apt/lists/* &&\
-    rm -f /etc/ssh/ssh_host_*
+    rm -f /etc/ssh/ssh_host_* &&\
+# delete man pages and documentation
+    rm -rf /usr/share/man &&\
+    mkdir -p /usr/share/man &&\
+    rm -rf /usr/share/doc &&\
+    mkdir -p /usr/share/doc &&\
+    rm -rf /var/cache/apt/archives &&\
+    mkdir -p /var/cache/apt/archives &&\
+    rm -rf /usr/share/locale &&\
+    mkdir -p /usr/share/locale
 
 ADD scripts /bin/
