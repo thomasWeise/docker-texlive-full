@@ -24,8 +24,8 @@ RUN apt-get clean &&\
 # the idea is based on https://askubuntu.com/questions/129566
     printf 'path-exclude /usr/share/doc/*\npath-include /usr/share/doc/*/copyright\npath-exclude /usr/share/man/*\npath-exclude /usr/share/groff/*\npath-exclude /usr/share/info/*\npath-exclude /usr/share/lintian/*\npath-exclude /usr/share/linda/*' > /etc/dpkg/dpkg.cfg.d/01_nodoc &&\
 # remove doc files and man pages already installed
-    find /usr/share/doc -depth -type f ! -name copyright|xargs rm || true &&\
-    find /usr/share/doc -empty|xargs rmdir || true &&\
+    find /usr/share/doc -depth -type f -print0 ! -name copyright|xargs -0 rm || true &&\
+    find /usr/share/doc -empty -print0|xargs -0 rmdir || true &&\
     rm -rf /usr/share/groff/* /usr/share/info/* &&\
     rm -rf /usr/share/lintian/* /usr/share/linda/* /var/cache/man/* &&\
     rm -rf /usr/share/man/* &&\
