@@ -30,10 +30,8 @@ RUN apt-get clean &&\
     rm -rf /usr/share/lintian/* /usr/share/linda/* /var/cache/man/* &&\
     rm -rf /usr/share/man &&\
     mkdir -p /usr/share/man &&\
-    mv /user/share/doc/copyright /tmp  &&\
-    rm -rf /usr/share/doc &&\
-    mkdir -p /usr/share/doc &&\
-    mv /tmp/copyright /user/share/doc &&\
+    find /usr/share/doc -depth -type f ! -name copyright|xargs rm || true &&\
+    find /usr/share/doc -empty|xargs rmdir || true &&\
     mkdir -p /usr/share/info &&\
 # install utilities
     apt-get install -f -y apt-utils &&\
@@ -104,10 +102,8 @@ RUN apt-get clean &&\
 # delete man pages and documentation
     rm -rf /usr/share/man &&\
     mkdir -p /usr/share/man &&\
-    mv /user/share/doc/copyright /tmp  &&\
-    rm -rf /usr/share/doc &&\
-    mkdir -p /usr/share/doc &&\
-    mv /tmp/copyright /user/share/doc &&\
+    find /usr/share/doc -depth -type f ! -name copyright|xargs rm || true &&\
+    find /usr/share/doc -empty|xargs rmdir || true &&\
     rm -rf /var/cache/apt/archives &&\
     mkdir -p /var/cache/apt/archives &&\
     rm -rf /tmp/* /var/tmp/*
