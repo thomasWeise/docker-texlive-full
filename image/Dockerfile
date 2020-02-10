@@ -76,17 +76,37 @@ RUN apt-get clean &&\
     curl --output "/root/mscorefonts-eula" "http://corefonts.sourceforge.net/eula.htm" &&\
 # install TeX Live and ghostscript as well as other tools
     apt-get install -f -y --no-install-recommends \
+          cm-super \
+          context \
+          dvipng \
           ghostscript \
           make \
           latex-cjk-common \
           latex-cjk-chinese \
-          texlive-full \
+          latexmk \
+          lmodern \
+          psutils \
+          purifyeps \
+          t1utils \
+          tex-gyre \
+          tex4ht \
+          texlive \
           texlive-fonts-extra \
           texlive-fonts-recommended \
+          texlive-formats-extra \
+          texlive-generic-extra \
+          texlive-htmlxml \
           texlive-lang-all \
           texlive-lang-cjk \
+          texlive-latex-extra \
+          texlive-latex-recommended \
           texlive-luatex \
+          texlive-math-extra \
+          texlive-metapost \
+          texlive-pictures \
+          texlive-plain-extra \
           texlive-pstricks \
+          texlive-publishers \
           texlive-science \
           texlive-xetex \
           texlive-bibtex-extra \
