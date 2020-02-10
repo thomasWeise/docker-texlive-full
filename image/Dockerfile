@@ -74,7 +74,7 @@ RUN apt-get clean &&\
     echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | debconf-set-selections &&\
     echo "ttf-mscorefonts-installer msttcorefonts/present-mscorefonts-eula note" | debconf-set-selections &&\
     curl --output "/tmp/mscorefonts.deb" "http://ftp.de.debian.org/debian/pool/contrib/m/msttcorefonts/ttf-mscorefonts-installer_3.7_all.deb" &&\
-    apt-get install -f -y --no-install-recommends --allow-unauthenticated "/tmp/mscorefonts.deb" &&\
+    apt install -f -y --no-install-recommends "/tmp/mscorefonts.deb" || true &&\
     rm -f "/tmp/mscorefonts.deb" &&\
 # we make sure to contain the EULA in our container
     curl --output "/root/mscorefonts-eula" "http://corefonts.sourceforge.net/eula.htm" &&\
