@@ -128,10 +128,9 @@ RUN apt-get clean &&\
     rm -rf /usr/share/texlive/texmf-dist/source || true &&\
     find /usr/share/texlive -type f -name "readme*.*" -delete &&\
     find /usr/share/texlive -type f -name "README*.*" -delete &&\
-    find /usr/share/texlive/source -type d -empty -delete || true &&\
-    find /usr/share/texmf -type d -empty -delete || true &&\
-    mkdir -p /usr/share/texmf/source &&\
-    mkdir -p /usr/share/texlive/texmf-dist/source &&\
+    rm -rf /usr/share/texlive/release-texlive.txt || true &&\
+    rm -rf /usr/share/texlive/doc.html || true &&\
+    rm -rf /usr/share/texlive/index.html || true &&\
 # update font cache
     fc-cache -fv &&\
 # clean up all temporary files
@@ -153,7 +152,9 @@ RUN apt-get clean &&\
     rm -rf /var/cache/apt/archives &&\
     mkdir -p /var/cache/apt/archives &&\
     rm -rf /tmp/* /var/tmp/* &&\
-    find /usr/share/ -type f -empty -delete &&\
-    find /usr/share/ -type d -empty -delete
+    find /usr/share/ -type f -empty -delete || true &&\
+    find /usr/share/ -type d -empty -delete || true &&\
+    mkdir -p /usr/share/texmf/source &&\
+    mkdir -p /usr/share/texlive/texmf-dist/source
 
 ADD scripts /bin/
