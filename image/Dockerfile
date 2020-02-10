@@ -15,11 +15,7 @@ MAINTAINER Thomas Weise <tweise@hfuu.edu.cn>
 ENV LANG=C.UTF-8
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get clean &&\
-    apt-get update &&\
-    apt-get autoclean -y &&\
-    apt-get autoremove -y &&\
-    apt-get update &&\
+RUN apt-get update &&\
 # prevent doc and man pages from being installed
 # the idea is based on https://askubuntu.com/questions/129566
 # and https://askubuntu.com/questions/628407
@@ -134,10 +130,6 @@ RUN apt-get clean &&\
 # update font cache
     fc-cache -fv &&\
 # clean up all temporary files
-    apt-get clean &&\
-    apt-get autoclean -y &&\
-    apt-get autoremove -y &&\
-    apt-get clean &&\
     rm -rf /var/lib/apt/lists/* &&\
     rm -f /etc/ssh/ssh_host_* &&\
 # delete man pages and documentation
