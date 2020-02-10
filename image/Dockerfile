@@ -34,37 +34,38 @@ RUN apt-get clean &&\
     find /usr/share/doc -empty|xargs rmdir || true &&\
     mkdir -p /usr/share/info &&\
 # install utilities
-    apt-get install -f -y apt-utils &&\
+    apt-get install -f -y --no-install-recommends apt-utils &&\
 # install some nice fonts, e.g., for chinese and other
-    apt-get install -f -y curl \
-                          emacs-intl-fonts \
-                          fontconfig \
-                          fonts-arphic-bkai00mp \
-                          fonts-arphic-bsmi00lp \
-                          fonts-arphic-gbsn00lp \
-                          fonts-arphic-gkai00mp \
-                          fonts-arphic-ukai \
-                          fonts-arphic-uming \
-                          fonts-dejavu \
-                          fonts-dejavu-core \
-                          fonts-dejavu-extra \
-                          fonts-droid-fallback \
-                          fonts-guru \
-                          fonts-guru-extra \
-                          fonts-liberation \
-                          fonts-noto-cjk \
-                          fonts-opensymbol \
-                          fonts-roboto \
-                          fonts-roboto-hinted \
-                          fonts-stix \
-                          fonts-symbola \
-                          fonts-texgyre \
-                          fonts-unfonts-core \
-                          ttf-wqy-microhei \
-                          ttf-wqy-zenhei \
-                          xfonts-intl-chinese \
-                          xfonts-intl-chinese-big \
-                          xfonts-wqy &&\
+    apt-get install -f -y --no-install-recommends \
+          curl \
+          emacs-intl-fonts \
+          fontconfig \
+          fonts-arphic-bkai00mp \
+          fonts-arphic-bsmi00lp \
+          fonts-arphic-gbsn00lp \
+          fonts-arphic-gkai00mp \
+          fonts-arphic-ukai \
+          fonts-arphic-uming \
+          fonts-dejavu \
+          fonts-dejavu-core \
+          fonts-dejavu-extra \
+          fonts-droid-fallback \
+          fonts-guru \
+          fonts-guru-extra \
+          fonts-liberation \
+          fonts-noto-cjk \
+          fonts-opensymbol \
+          fonts-roboto \
+          fonts-roboto-hinted \
+          fonts-stix \
+          fonts-symbola \
+          fonts-texgyre \
+          fonts-unfonts-core \
+          ttf-wqy-microhei \
+          ttf-wqy-zenhei \
+          xfonts-intl-chinese \
+          xfonts-intl-chinese-big \
+          xfonts-wqy &&\
 # now the microsoft core fonts
     echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | debconf-set-selections &&\
     echo "ttf-mscorefonts-installer msttcorefonts/present-mscorefonts-eula note" | debconf-set-selections &&\
@@ -74,22 +75,23 @@ RUN apt-get clean &&\
 # we make sure to contain the EULA in our container
     curl --output "/root/mscorefonts-eula" "http://corefonts.sourceforge.net/eula.htm" &&\
 # install TeX Live and ghostscript as well as other tools
-    apt-get install -f -y ghostscript \
-                          make \
-                          latex-cjk-common \
-                          latex-cjk-chinese \
-                          texlive-full \
-                          texlive-fonts-extra \
-                          texlive-fonts-recommended \
-                          texlive-lang-all \
-                          texlive-lang-cjk \
-                          texlive-luatex \
-                          texlive-pstricks \
-                          texlive-science \
-                          texlive-xetex \
-                          texlive-bibtex-extra \
-                          poppler-utils \
-                          latexmk &&\
+    apt-get install -f -y --no-install-recommends \
+          ghostscript \
+          make \
+          latex-cjk-common \
+          latex-cjk-chinese \
+          texlive-full \
+          texlive-fonts-extra \
+          texlive-fonts-recommended \
+          texlive-lang-all \
+          texlive-lang-cjk \
+          texlive-luatex \
+          texlive-pstricks \
+          texlive-science \
+          texlive-xetex \
+          texlive-bibtex-extra \
+          poppler-utils \
+          latexmk &&\
 # update font cache
     fc-cache -fv &&\
 # clean up all temporary files
