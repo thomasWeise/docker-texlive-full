@@ -16,6 +16,12 @@ ENV LANG=C.UTF-8
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update &&\
+# bring everything to the latest state
+    dpkg --configure -a &&\
+    apt-get -y --fix-missing install &&\
+    apt-get -y -f install &&\
+    apt-get -y --with-new-pkgs upgrade &&\
+    apt -y --fix-broken install &&\
 # prevent doc and man pages from being installed
 # the idea is based on https://askubuntu.com/questions/129566
 # and https://askubuntu.com/questions/628407
