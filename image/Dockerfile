@@ -81,30 +81,36 @@ RUN apt-get clean &&\
           dvipng \
           ghostscript \
           make \
+          latex-cjk-all \
           latex-cjk-common \
           latex-cjk-chinese \
           latexmk \
+          lcdf-typetools \
           lmodern \
           psutils \
           purifyeps \
           t1utils \
           tex-gyre \
           tex4ht \
-          texlive \
+          texlive-base \
+          texlive-bibtex-extra \
+          texlive-binaries \
+          texlive-extra-utils \
+          texlive-font-utils \
           texlive-fonts-extra \
+          texlive-fonts-extra-links \
           texlive-fonts-recommended \
           texlive-formats-extra \
-          texlive-generic-extra \
-          texlive-htmlxml \
           texlive-lang-all \
+          texlive-lang-chinese \
           texlive-lang-cjk \
+          texlive-latex-base \
           texlive-latex-extra \
           texlive-latex-recommended \
           texlive-luatex \
-          texlive-math-extra \
           texlive-metapost \
           texlive-pictures \
-          texlive-plain-extra \
+          texlive-plain-generic \
           texlive-pstricks \
           texlive-publishers \
           texlive-science \
