@@ -23,7 +23,7 @@ RUN apt-get clean &&\
 # prevent doc and man pages from being installed
 # the idea is based on https://askubuntu.com/questions/129566
 # and https://askubuntu.com/questions/628407
-    printf 'path-exclude /usr/share/doc/*\npath-include /usr/share/doc/*/copyright\npath-exclude /usr/share/man/*\npath-exclude /usr/share/groff/*\npath-exclude /usr/share/info/*\npath-exclude /usr/share/lintian/*\npath-exclude /usr/share/linda/*' > /etc/dpkg/dpkg.cfg.d/01_nodoc &&\
+    printf 'path-exclude /usr/share/doc/*\npath-include /usr/share/doc/*/copyright\npath-exclude /usr/share/man/*\npath-exclude /usr/share/groff/*\npath-exclude /usr/share/info/*\npath-exclude /usr/share/lintian/*\npath-exclude /usr/share/linda/*\npath-exclude=/usr/share/locale/*' > /etc/dpkg/dpkg.cfg.d/01_nodoc &&\
     printf 'Dir::Cache "";\nDir::Cache::archives "";' > /etc/apt/apt.conf.d/02nocache &&\
 # remove doc files and man pages already installed
     rm -rf /usr/share/groff/* /usr/share/info/* &&\
@@ -32,6 +32,10 @@ RUN apt-get clean &&\
     mkdir -p /usr/share/man &&\
     find /usr/share/doc -depth -type f ! -name copyright|xargs rm || true &&\
     find /usr/share/doc -empty|xargs rmdir || true &&\
+    find /usr/share/doc -type f -name "*.pdf" -delete &&\
+    find /usr/share/doc -type f -name "*.gz" -delete &&\
+    find /usr/share/doc -type f -name "*.tex" -delete &&\
+    mkdir -p /usr/share/doc &&\
     mkdir -p /usr/share/info &&\
 # install utilities
     apt-get install -f -y --no-install-recommends apt-utils &&\
@@ -69,7 +73,7 @@ RUN apt-get clean &&\
 # now the microsoft core fonts
     echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | debconf-set-selections &&\
     echo "ttf-mscorefonts-installer msttcorefonts/present-mscorefonts-eula note" | debconf-set-selections &&\
-    curl --output "/tmp/mscorefonts.deb" "http://ftp.de.debian.org/debian/pool/contrib/m/msttcorefonts/ttf-mscorefonts-installer_3.6_all.deb" &&\
+    curl --output "/tmp/mscorefonts.deb" "http://ftp.de.debian.org/debian/pool/contrib/m/msttcorefonts/ttf-mscorefonts-installer_3.7_all.deb" &&\
     apt install -f -y --no-install-recommends "/tmp/mscorefonts.deb" &&\
     rm -f "/tmp/mscorefonts.deb" &&\
 # we make sure to contain the EULA in our container
@@ -77,7 +81,6 @@ RUN apt-get clean &&\
 # install TeX Live and ghostscript as well as other tools
     apt-get install -f -y --no-install-recommends \
           cm-super \
-          context \
           dvipng \
           ghostscript \
           make \
@@ -87,6 +90,7 @@ RUN apt-get clean &&\
           latexmk \
           lcdf-typetools \
           lmodern \
+          poppler-utils \
           psutils \
           purifyeps \
           t1utils \
@@ -115,9 +119,7 @@ RUN apt-get clean &&\
           texlive-publishers \
           texlive-science \
           texlive-xetex \
-          texlive-bibtex-extra \
-          poppler-utils \
-          latexmk &&\
+          texlive-bibtex-extra &&\
 # update font cache
     fc-cache -fv &&\
 # clean up all temporary files
