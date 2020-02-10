@@ -34,11 +34,14 @@ RUN apt-get clean &&\
     find /usr/share/doc -type f -name "*.pdf" -delete &&\
     find /usr/share/doc -type f -name "*.gz" -delete &&\
     find /usr/share/doc -type f -name "*.tex" -delete &&\
-    find /usr/share/doc -empty|xargs rmdir || true &&\
+    find /usr/share/doc -type d -empty -delete || true &&\
     mkdir -p /usr/share/doc &&\
     mkdir -p /usr/share/info &&\
 # install utilities
     apt-get install -f -y --no-install-recommends apt-utils &&\
+# get and update certificates, to hopefully resolve mscorefonts error
+    apt-get install -f -y --no-install-recommends ca-certificates &&\
+    update-ca-certificates &&\
 # install some nice fonts, e.g., for chinese and other
     apt-get install -f -y --no-install-recommends \
           curl \
@@ -73,9 +76,9 @@ RUN apt-get clean &&\
 # now the microsoft core fonts
     echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | debconf-set-selections &&\
     echo "ttf-mscorefonts-installer msttcorefonts/present-mscorefonts-eula note" | debconf-set-selections &&\
-    curl --output "/tmp/mscorefonts.deb" "http://ftp.de.debian.org/debian/pool/contrib/m/msttcorefonts/ttf-mscorefonts-installer_3.7_all.deb" &&\
-    apt install -f -y --no-install-recommends "/tmp/mscorefonts.deb" || true &&\
-    rm -f "/tmp/mscorefonts.deb" &&\
+    curl --output "/tmp/ttf-mscorefonts-installer.deb" "http://ftp.de.debian.org/debian/pool/contrib/m/msttcorefonts/ttf-mscorefonts-installer_3.7_all.deb" &&\
+    apt install -f -y --no-install-recommends "/tmp/ttf-mscorefonts-installer.deb" || true &&\
+    rm -f "/tmp/ttf-mscorefonts-installer.deb" &&\
 # we make sure to contain the EULA in our container
     curl --output "/root/mscorefonts-eula" "http://corefonts.sourceforge.net/eula.htm" &&\
 # install TeX Live and ghostscript as well as other tools
@@ -125,8 +128,8 @@ RUN apt-get clean &&\
     rm -rf /usr/share/texlive/texmf-dist/source || true &&\
     find /usr/share/texlive -type f -name "readme*.*" -delete &&\
     find /usr/share/texlive -type f -name "README*.*" -delete &&\
-    find /usr/share/texlive -empty|xargs rmdir || true &&\
-    find /usr/share/texmf -empty|xargs rmdir || true &&\
+    find /usr/share/texlive/source -type d -empty -delete || true &&\
+    find /usr/share/texmf -type d -empty -delete || true &&\
     mkdir -p /usr/share/texmf/source &&\
     mkdir -p /usr/share/texlive/texmf-dist/source &&\
 # update font cache
@@ -145,10 +148,12 @@ RUN apt-get clean &&\
     find /usr/share/doc -type f -name "*.pdf" -delete &&\
     find /usr/share/doc -type f -name "*.gz" -delete &&\
     find /usr/share/doc -type f -name "*.tex" -delete &&\
-    find /usr/share/doc -empty|xargs rmdir || true &&\
+    find /usr/share/doc -type d -empty -delete || true &&\
     mkdir -p /usr/share/doc &&\
     rm -rf /var/cache/apt/archives &&\
     mkdir -p /var/cache/apt/archives &&\
-    rm -rf /tmp/* /var/tmp/*
+    rm -rf /tmp/* /var/tmp/* &&\
+    find /usr/share/ -type f -empty -delete &&\
+    find /usr/share/ -type d -empty -delete
 
 ADD scripts /bin/
