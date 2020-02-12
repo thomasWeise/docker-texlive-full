@@ -38,7 +38,7 @@ RUN apt-get update &&\
 # get and update certificates, to hopefully resolve mscorefonts error
     apt-get install -f -y --no-install-recommends ca-certificates &&\
     update-ca-certificates &&\
-# install some nice fonts, e.g., for chinese and other
+# install some utilitites and nice fonts, e.g., for chinese and other
     apt-get install -f -y --no-install-recommends \
           curl \
           emacs-intl-fonts \
@@ -130,6 +130,7 @@ RUN apt-get update &&\
 # update font cache
     fc-cache -fv &&\
 # clean up all temporary files
+    apt-get clean -y || true &&\
     rm -rf /var/lib/apt/lists/* &&\
     rm -f /etc/ssh/ssh_host_* &&\
 # delete man pages and documentation
