@@ -47,7 +47,7 @@ gs -q -dEmbedAllFonts=true \
       -sDEVICE=pdfwrite \
       -dAutoRotatePages=/PageByPage \
       -sOutputFile="$tempDest" "$source" \
-      -c ".setpdfwrite <</NeverEmbed [ ]>> setdistillerparams"
+      -c "<</NeverEmbed [ ]>> setdistillerparams"
 
 echo "Finished filtering '$source' to '$tempDest', now checking result."
 
