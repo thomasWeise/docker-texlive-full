@@ -15,9 +15,11 @@ MAINTAINER Thomas Weise <tweise@hfuu.edu.cn>
 ENV LANG=C.UTF-8
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update &&\
+RUN echo "Initial update." &&\
+    apt-get update &&\
 # prevent doc and man pages from being installed
 # the idea is based on https://askubuntu.com/questions/129566
+    echo "Preventing doc and man pages from being installed." &&\
     printf 'path-exclude /usr/share/doc/*\npath-include /usr/share/doc/*/copyright\npath-exclude /usr/share/man/*\npath-exclude /usr/share/groff/*\npath-exclude /usr/share/info/*\npath-exclude /usr/share/lintian/*\npath-exclude /usr/share/linda/*\npath-exclude=/usr/share/locale/*' > /etc/dpkg/dpkg.cfg.d/01_nodoc &&\
 # remove doc files and man pages already installed
     rm -rf /usr/share/groff/* /usr/share/info/* &&\
@@ -28,15 +30,18 @@ RUN apt-get update &&\
     find /usr/share/doc -type f -name "*.pdf" -delete &&\
     find /usr/share/doc -type f -name "*.gz" -delete &&\
     find /usr/share/doc -type f -name "*.tex" -delete &&\
-    find /usr/share/doc -type d -empty -delete || true &&\
+    (find /usr/share/doc -type d -empty -delete || true) &&\
     mkdir -p /usr/share/doc &&\
     mkdir -p /usr/share/info &&\
 # install utilities
+    echo "Installing utilities." &&\
     apt-get install -f -y --no-install-recommends apt-utils &&\
 # get and update certificates, to hopefully resolve mscorefonts error
+    echo "Get and update certificates for mscorefonts." &&\
     apt-get install -f -y --no-install-recommends ca-certificates &&\
     update-ca-certificates &&\
-# install some utilitites and nice fonts, e.g., for chinese and other
+# install some utilitites and nice fonts, e.g., for Chinese and others
+    echo "Installing utilities and nice fonts for Chinese and others." &&\
     apt-get install -f -y --no-install-recommends \
           curl \
           emacs-intl-fonts \
@@ -68,13 +73,15 @@ RUN apt-get update &&\
           xfonts-intl-chinese-big \
           xfonts-wqy &&\
 # now the microsoft core fonts
+    echo "Installing microsoft core fonts." &&\
     echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | debconf-set-selections &&\
     echo "ttf-mscorefonts-installer msttcorefonts/present-mscorefonts-eula note" | debconf-set-selections &&\
     curl --output "/tmp/ttf-mscorefonts-installer.deb" "http://ftp.de.debian.org/debian/pool/contrib/m/msttcorefonts/ttf-mscorefonts-installer_3.7_all.deb" &&\
-    apt install -f -y --no-install-recommends "/tmp/ttf-mscorefonts-installer.deb" || true &&\
+    (apt install -f -y --no-install-recommends "/tmp/ttf-mscorefonts-installer.deb" || true) &&\
     rm -f "/tmp/ttf-mscorefonts-installer.deb" &&\
 # we make sure to contain the EULA in our container
     curl --output "/root/mscorefonts-eula" "http://corefonts.sourceforge.net/eula.htm" &&\
+    echo "Installing TeX Live and ghostscript and other tools." &&\
 # install TeX Live and ghostscript as well as other tools
     apt-get install -f -y --no-install-recommends \
           cm-super \
@@ -117,35 +124,40 @@ RUN apt-get update &&\
           texlive-science \
           texlive-xetex \
           texlive-bibtex-extra &&\
-# delete texlive sources and other potentially useless stuff
-    rm -rf /usr/share/texmf/source || true &&\
-    rm -rf /usr/share/texlive/texmf-dist/source || true &&\
+# delete Tex Live sources and other potentially useless stuff
+    echo "Delete TeX Live sources and other useless stuff." &&\
+    (rm -rf /usr/share/texmf/source || true) &&\
+    (rm -rf /usr/share/texlive/texmf-dist/source || true) &&\
     find /usr/share/texlive -type f -name "readme*.*" -delete &&\
     find /usr/share/texlive -type f -name "README*.*" -delete &&\
-    rm -rf /usr/share/texlive/release-texlive.txt || true &&\
-    rm -rf /usr/share/texlive/doc.html || true &&\
-    rm -rf /usr/share/texlive/index.html || true &&\
+    (rm -rf /usr/share/texlive/release-texlive.txt || true) &&\
+    (rm -rf /usr/share/texlive/doc.html || true) &&\
+    (rm -rf /usr/share/texlive/index.html || true) &&\
 # update font cache
+    echo "Update font cache." &&\
     fc-cache -fv &&\
 # clean up all temporary files
+    echo "Clean up all temporary files." &&\
     apt-get clean -y &&\
     rm -rf /var/lib/apt/lists/* &&\
     rm -f /etc/ssh/ssh_host_* &&\
 # delete man pages and documentation
+    echo "Delete man pages and documentation." &&\
     rm -rf /usr/share/man &&\
     mkdir -p /usr/share/man &&\
     find /usr/share/doc -depth -type f ! -name copyright -delete &&\
     find /usr/share/doc -type f -name "*.pdf" -delete &&\
     find /usr/share/doc -type f -name "*.gz" -delete &&\
     find /usr/share/doc -type f -name "*.tex" -delete &&\
-    find /usr/share/doc -type d -empty -delete || true &&\
+    (find /usr/share/doc -type d -empty -delete || true) &&\
     mkdir -p /usr/share/doc &&\
     rm -rf /var/cache/apt/archives &&\
     mkdir -p /var/cache/apt/archives &&\
     rm -rf /tmp/* /var/tmp/* &&\
-    find /usr/share/ -type f -empty -delete || true &&\
-    find /usr/share/ -type d -empty -delete || true &&\
+    (find /usr/share/ -type f -empty -delete || true) &&\
+    (find /usr/share/ -type d -empty -delete || true) &&\
     mkdir -p /usr/share/texmf/source &&\
-    mkdir -p /usr/share/texlive/texmf-dist/source
+    mkdir -p /usr/share/texlive/texmf-dist/source &&\
+    echo "All done."
 
 ADD scripts /bin/
