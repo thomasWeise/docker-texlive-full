@@ -90,6 +90,7 @@ RUN echo "Initial update." &&\
           fonts-dejavu-core \
           fonts-dejavu-extra \
           ghostscript \
+          gnuplot \
           make \
           latex-cjk-all \
           latex-cjk-common \
@@ -100,6 +101,7 @@ RUN echo "Initial update." &&\
           poppler-utils \
           psutils \
           purifyeps \
+          python3-pygment \
           t1utils \
           tex-gyre \
           tex4ht \
