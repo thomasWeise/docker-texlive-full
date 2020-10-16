@@ -101,7 +101,7 @@ RUN echo "Initial update." &&\
           poppler-utils \
           psutils \
           purifyeps \
-          python3-pygment \
+          python3-pygments \
           t1utils \
           tex-gyre \
           tex4ht \
