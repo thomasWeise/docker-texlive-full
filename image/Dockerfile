@@ -9,14 +9,20 @@
 # software components inside the image are under the respective
 # licenses chosen by their respective copyright holders.
 #
-FROM ubuntu:20.10
+FROM ubuntu:22.04
 MAINTAINER Thomas Weise <tweise@hfuu.edu.cn>
 
 ENV LANG=C.UTF-8
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN echo "Initial update." &&\
-    apt-get update &&\
+RUN echo "Using chinese apt mirror, because otherwise I cannot build this image on my PC." &&\
+    sed -i 's/archive\.ubuntu\.com/mirrors.ustc.edu.cn/g' /etc/apt/sources.list &&\
+    echo "/etc/apt/sources.list  is now:" &&\
+    cat /etc/apt/sources.list &&\
+    echo "Performing initial clean-up and updates." &&\
+    apt-get -y update &&\
+    apt-get -y --fix-missing --no-install-recommends install &&\
+    apt-get -y --with-new-pkgs --no-install-recommends upgrade &&\
 # prevent doc and man pages from being installed
 # the idea is based on https://askubuntu.com/questions/129566
     echo "Preventing doc and man pages from being installed." &&\
